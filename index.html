@@ -120,6 +120,31 @@
 
     html { scroll-behavior: smooth; }
 
+    /* ── SKIP LINK ── */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 0 0 4px 4px;
+      z-index: 100;
+      text-decoration: none;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* ── FOCUS STYLES ── */
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--paper);
@@ -209,9 +234,13 @@
     nav {
       border-top: 1px solid var(--rule);
       display: flex;
-      flex-wrap: wrap;
       gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+
+    nav::-webkit-scrollbar { display: none; }
 
     nav a {
       font-size: 0.78rem;
@@ -220,16 +249,24 @@
       text-transform: uppercase;
       color: var(--mid);
       text-decoration: none;
-      padding: 0.85rem 1.2rem 0.85rem 0;
-      margin-right: 1.2rem;
+      padding: 0.85rem 0.8rem 0.85rem 0;
+      margin-right: 0.8rem;
       border-top: 2px solid transparent;
       margin-top: -1px;
       transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
     }
+
+    nav a:last-child { margin-right: 0; }
 
     nav a:hover, nav a.active {
       color: var(--ink);
       border-top-color: var(--accent);
+    }
+
+    nav a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
     }
 
     /* ── MAIN ── */
@@ -423,9 +460,25 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
+      body { font-size: 15px; }
+
+      .header-inner { padding: 0 1.2rem; }
+      main { padding: 0 1.2rem; }
+
       .header-grid { grid-template-columns: 1fr; }
       .headshot-wrap { order: -1; }
       .headshot-wrap img, .headshot-placeholder { width: 80px; height: 80px; }
+
+      nav { margin: 0 -1.2rem; padding: 0 1.2rem; }
+      nav a {
+        padding: 0.75rem 0.6rem 0.75rem 0;
+        margin-right: 0.6rem;
+        font-size: 0.72rem;
+      }
+
+      section { padding: 2.5rem 0; }
+
+      h2 { font-size: 1.5rem; }
 
       .press-item {
         grid-template-columns: 1fr;
@@ -437,6 +490,12 @@
       .timeline li {
         grid-template-columns: 1fr;
         gap: 0.3rem;
+      }
+
+      .contact-link {
+        padding: 0.4rem 0;
+        min-height: 44px;
+        align-items: center;
       }
     }
 
@@ -459,7 +518,9 @@
 </head>
 <body>
 
-<header>
+<a class="skip-link" href="#about">Skip to content</a>
+
+<header role="banner">
   <div class="header-inner">
     <p class="eyebrow">Managing Director · Havas Market UK</p>
     <div class="header-grid">
@@ -471,7 +532,7 @@
         <img src="photo.jpg" alt="Alex Walker, Managing Director of Havas Market UK">
       </div>
     </div>
-    <nav>
+    <nav aria-label="Page sections">
       <a href="#about">About</a>
       <a href="#career">Career</a>
       <a href="#recognition">Recognition</a>
@@ -562,7 +623,7 @@
         <span class="tl-date">2025</span>
         <div>
           <div class="tl-role">Leadership Team of The Year</div>
-          <div class="tl-org">The Media Leader Awards — Havas Market UK</div>
+          <div class="tl-org">The Media Leader Awards — Havas Media Network UK</div>
         </div>
       </li>
       <li>
@@ -722,7 +783,7 @@
       </div>
       <div class="faq-item">
         <h3>What is Havas Market UK?</h3>
-        <p>Havas Market UK is a performance marketing and commerce agency within Havas Media Network. It was named Performance Marketing Agency of the Year 2025 by PMW and Leadership Team of The Year 2025 by The Media Leader. The agency covers paid search, SEO, retail media, social commerce, marketplaces, and data and analytics.</p>
+        <p>Havas Market UK is a performance marketing and commerce agency within Havas Media Network. It was named Performance Marketing Agency of the Year 2025 by PMW. Havas Media Network UK won Leadership Team of The Year 2025 at The Media Leader Awards. The agency covers paid search, SEO, retail media, social commerce, marketplaces, and data and analytics.</p>
       </div>
       <div class="faq-item">
         <h3>What is Generative Engine Optimisation (GEO)?</h3>
@@ -754,7 +815,7 @@
         "name": "What is Havas Market UK?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Havas Market UK is a performance marketing and commerce agency within Havas Media Network. It was named Performance Marketing Agency of the Year 2025 by PMW and Leadership Team of The Year 2025 by The Media Leader. The agency covers paid search, SEO, retail media, social commerce, marketplaces, and data and analytics."
+          "text": "Havas Market UK is a performance marketing and commerce agency within Havas Media Network. It was named Performance Marketing Agency of the Year 2025 by PMW. Havas Media Network UK won Leadership Team of The Year 2025 at The Media Leader Awards. The agency covers paid search, SEO, retail media, social commerce, marketplaces, and data and analytics."
         }
       },
       {
@@ -783,12 +844,12 @@
     <h2>Get in touch</h2>
     <p>For speaking opportunities, media enquiries, or to discuss performance marketing and commerce strategy.</p>
     <div class="contact-links">
-      <a class="contact-link" href="https://www.linkedin.com/in/indigo/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      <a class="contact-link" href="https://www.linkedin.com/in/indigo/" target="_blank" rel="noopener" aria-label="Alex Walker on LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         linkedin.com/in/indigo
       </a>
-      <a class="contact-link" href="https://www.havasmarket.co.uk/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <a class="contact-link" href="https://www.havasmarket.co.uk/" target="_blank" rel="noopener" aria-label="Havas Market UK website">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Havas Market UK
       </a>
     </div>
