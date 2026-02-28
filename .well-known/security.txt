@@ -1,0 +1,4 @@
+Contact: https://www.linkedin.com/in/indigo/
+Expires: 2027-02-28T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.alexwalker.net/.well-known/security.txt
