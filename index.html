@@ -574,6 +574,21 @@
     section:nth-child(5) { animation-delay: 0.32s; }
     section:nth-child(6) { animation-delay: 0.40s; }
     section:nth-child(7) { animation-delay: 0.48s; }
+
+    /* ── PRINT ── */
+    @media print {
+      *, *::before, *::after { animation: none !important; }
+      body { background: #fff; color: #000; font-size: 12pt; }
+      .skip-link, nav, #contact .contact-links, .eyebrow { display: none; }
+      header { border-bottom: 1px solid #ccc; }
+      a { color: #000; text-decoration: none; }
+      .press-item::after { content: " (" attr(href) ")"; font-size: 8pt; color: #666; }
+      footer { border-top: 1px solid #ccc; }
+      h1, h2 { color: #000; }
+      .headshot-wrap img { border: 1px solid #ccc; box-shadow: none; }
+      .tag { border-color: #ccc; color: #333; background: #fff; }
+      section { break-inside: avoid; padding: 1.5rem 0; }
+    }
   </style>
 </head>
 <body>
