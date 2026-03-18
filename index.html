@@ -240,7 +240,12 @@
       border-top: 1px solid var(--rule);
       display: flex;
       gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+
+    nav::-webkit-scrollbar { display: none; }
 
     nav a {
       font-size: 0.78rem;
@@ -254,6 +259,8 @@
       border-top: 2px solid transparent;
       margin-top: -1px;
       transition: color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     nav a:hover, nav a.active {
@@ -528,7 +535,7 @@
       <li>
         <span class="tl-date">2016 – 2022</span>
         <div>
-          <div class="tl-role">Founder &amp; CEO</div>
+          <div class="tl-role">Founder</div>
           <div class="tl-org">Expert Edge</div>
         </div>
       </li>
