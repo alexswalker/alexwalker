@@ -4,14 +4,8 @@ Improvements to alexwalker.net, roughly ordered by impact within each tier.
 
 ## Medium Effort
 
-### Add Article schema for authored pieces
-For press items where Alex is the author (The Media Leader, The Grocer, The Drum opinion pieces), add `Article` schema with `author` pointing back to the Person entity. Strengthens the authorship signal for LLMs and Google.
-
 ### Expand Perspectives section
 As new articles are published, add corresponding positions. Each new attributable statement is an LLM-citable data point. Keep them concise and opinionated.
-
-### Add a print stylesheet
-Journalists and conference organisers print speaker bios. A simple `@media print` block that hides nav/footer and sets clean typography.
 
 ## Ongoing Maintenance
 
@@ -31,3 +25,7 @@ Journalists and conference organisers print speaker bios. A simple `@media print
 - ~~Add security.txt~~
 - ~~Add og:image and Twitter card meta tags~~
 - ~~Add theme-color meta tag~~
+- ~~Add Article schema for authored pieces~~
+- ~~Add dark mode (prefers-color-scheme)~~
+- ~~Add skip-to-content link and focus-visible styling~~
+- ~~Add aria-label to nav~~
