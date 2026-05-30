@@ -49,6 +49,17 @@ All three should be set to today's date in the same commit as the content change
 
 The most directly relevant categories for this repo are **seo** (canonical/redirect consistency, meta robots, heading hierarchy), **agent-readiness** (stable URLs — feeds the GEO/LLM-crawler posture), and **accessibility** (descriptive link text, reduced motion). Note: header-based items (HSTS, `X-Content-Type-Options`, frame-ancestors) can't be satisfied on GitHub Pages without a CDN/proxy — flag them but don't treat them as in-repo fixes.
 
+**HTTP security headers — PENDING (Cloudflare, not in-repo).** Four required spec items are header-based and cannot be set on GitHub Pages: `Strict-Transport-Security` (HSTS), `X-Content-Type-Options: nosniff`, and clickjacking protection (`Content-Security-Policy: frame-ancestors 'none'` + `X-Frame-Options: DENY`). The plan is to satisfy these at the Cloudflare edge once `alexwalker.net` is added to Cloudflare — **this is not yet done** (the domain is not in Cloudflare at time of writing). The sibling domain `www.indigoclothing.com` already runs the exact target config and is the reference template:
+
+```
+strict-transport-security: max-age=15552000; includeSubDomains
+x-content-type-options: nosniff
+content-security-policy: frame-ancestors 'none'
+x-frame-options: DENY
+```
+
+HSTS + nosniff come from Cloudflare's SSL/TLS → Edge Certificates → HSTS panel (6-month max-age, includeSubDomains, **no preload** initially, No-Sniff Header on); the two clickjacking headers from a Rules → Transform Rules → Modify Response Header rule. Until that's live, an audit will correctly flag these four as unmet — they are a hosting/edge task, **not** an `index.html` change. Verify after setup with `curl -sSI https://alexwalker.net/ | grep -iE 'strict-transport|x-content-type|x-frame|content-security'`.
+
 **Local preview.** No build step. Open `index.html` directly, or run a quick static server:
 ```bash
 python3 -m http.server 8000
