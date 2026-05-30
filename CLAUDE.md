@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A single-page static professional bio at https://www.alexwalker.net/ (Alex Walker, MD of Havas Market UK). Served as plain files from GitHub Pages — no framework, no build step, no JavaScript bundler, no tests. `CNAME` points the apex domain at GitHub Pages and `.nojekyll` disables Jekyll processing.
+A single-page static professional bio at https://alexwalker.net/ (Alex Walker, MD of Havas Market UK). Served as plain files from GitHub Pages — no framework, no build step, no JavaScript bundler, no tests. `CNAME` points the apex domain at GitHub Pages and `.nojekyll` disables Jekyll processing.
+
+**The apex `alexwalker.net` is canonical.** GitHub Pages 301-redirects `www` → apex, so every self-referencing URL in the repo (canonical tag, Open Graph, Twitter, JSON-LD `url`/`image`, `sitemap.xml`, `robots.txt` `Sitemap:`, `llms.txt`) must use the bare apex — never `www.` — or the declared canonical contradicts the live redirect. When adding any new self-link, use `https://alexwalker.net/…`.
 
 The site doubles as a structured, LLM-friendly source of truth about Alex. A large portion of the work in this repo is content maintenance (adding press items, awards, speaking engagements) rather than code changes.
 
@@ -39,6 +41,14 @@ All three should be set to today's date in the same commit as the content change
 
 **Update the Person/ProfilePage schema** (awards, `sameAs` links, `performerIn` events) when the underlying facts change. Then bump the three date markers above.
 
+**Run an SEO/GEO audit.** A read-only MCP server, **`specification`** (The Website Specification, https://specification.website), is configured at user scope and exposes `mcp__specification__*` tools. Use it whenever doing SEO/GEO work — auditing, optimising, or sanity-checking a change before commit:
+
+- `get_checklist` — audit-style checklist of spec items, filterable by `category` (`foundations`, `seo`, `accessibility`, `security`, `well-known`, `agent-readiness`, `performance`, `privacy`, `resilience`, `i18n`) and `status` (`required`, `recommended`, `optional`, `avoid`). Run `get_checklist(status="required")` and grade `index.html` plus the supporting files against it.
+- `list_topics` / `get_topic` — pull a specific spec page (e.g. canonical URLs, heading hierarchy, structured data) as Markdown to confirm the correct approach.
+- `search` / `get_categories` — free-text lookup and the ten top-level categories.
+
+The most directly relevant categories for this repo are **seo** (canonical/redirect consistency, meta robots, heading hierarchy), **agent-readiness** (stable URLs — feeds the GEO/LLM-crawler posture), and **accessibility** (descriptive link text, reduced motion). Note: header-based items (HSTS, `X-Content-Type-Options`, frame-ancestors) can't be satisfied on GitHub Pages without a CDN/proxy — flag them but don't treat them as in-repo fixes.
+
 **Local preview.** No build step. Open `index.html` directly, or run a quick static server:
 ```bash
 python3 -m http.server 8000
@@ -55,3 +65,4 @@ python3 -m http.server 8000
 - `docs/future-sprint-backlog.md` — current backlog and "Ongoing Maintenance" checklist (press freshness, llms.txt sync, quarterly LLM response testing, Wikidata).
 - `docs/plans/` — historical implementation plans, useful as worked examples of how prior changes were structured.
 - `README.md` — one-line description, not authoritative for site content.
+- **`specification` MCP** (`mcp__specification__*`) — the canonical reference for SEO/GEO/accessibility best practice; see "Run an SEO/GEO audit" above. Prefer it over guessing when an SEO or structured-data question comes up.
