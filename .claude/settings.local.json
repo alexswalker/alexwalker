@@ -102,7 +102,8 @@
       "Bash(gh auth *)",
       "Bash(gh api *)",
       "Bash(curl -sS \"http://localhost:8020/\")",
-      "Bash(curl -sS http://localhost:8000/)"
+      "Bash(curl -sS http://localhost:8000/)",
+      "WebFetch(domain:www.thegrocer.co.uk)"
     ]
   }
 }
